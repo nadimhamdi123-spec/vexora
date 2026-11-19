@@ -72,7 +72,7 @@ devops-automation-platform/
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/devops-automation-platform.git
+git clone https://github.com/nadimhamdi123-spec/devops-automation-platform.git
 cd devops-automation-platform
 ```
 
