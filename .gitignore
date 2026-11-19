@@ -221,3 +221,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# Python type checking and linting
+.mypy_cache/
+.ruff_cache/
+.pyright/
+
+# Local databases
+*.sqlite3-journal
+
+# Temporary files
+*.tmp
+*.bak
