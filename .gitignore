@@ -221,6 +221,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
 # Python type checking and linting
 .mypy_cache/
 .ruff_cache/
@@ -232,3 +233,15 @@ __marimo__/
 # Temporary files
 *.tmp
 *.bak
+# DeployFlow local files
+*.db
+*.sqlite
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+
+# Environment variables
+.env.*
+!.env.example
