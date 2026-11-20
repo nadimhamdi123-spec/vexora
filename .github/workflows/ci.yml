@@ -1,5 +1,5 @@
 
-name: DeployFlow CI
+name: Vexora CI
 
 on:
   push:

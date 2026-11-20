@@ -14,13 +14,13 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    APP_NAME: str = "DeployFlow"
+    APP_NAME: str = "Vexora"
     APP_ENV: str = "development"
     DEBUG: bool = True
 
     API_V1_PREFIX: str = "/api/v1"
 
-    DATABASE_URL: str = "sqlite:///./deployflow.db"
+    DATABASE_URL: str = "sqlite:///./vexora.db"
     REDIS_URL: str = "redis://localhost:6379/0"
 
 

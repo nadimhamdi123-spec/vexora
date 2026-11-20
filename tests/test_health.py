@@ -12,6 +12,6 @@ def test_health_check():
     assert response.status_code == 200
     assert response.json() == {
         "status": "healthy",
-        "app": "DeployFlow",
+        "app": "Vexora",
         "environment": "development",
     }

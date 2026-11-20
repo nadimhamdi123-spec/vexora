@@ -52,9 +52,9 @@ def test_create_project(client):
     response = client.post(
         "/api/v1/projects/",
         json={
-            "name": "DeployFlow",
+            "name": "Vexora",
             "description": "Automation platform",
-            "git_url": "https://github.com/user/deployflow",
+            "git_url": "https://github.com/user/vexora",
             "default_branch": "main",
         },
     )
@@ -63,9 +63,9 @@ def test_create_project(client):
 
     data = response.json()
 
-    assert data["name"] == "DeployFlow"
+    assert data["name"] == "Vexora"
     assert data["description"] == "Automation platform"
-    assert data["git_url"] == "https://github.com/user/deployflow"
+    assert data["git_url"] == "https://github.com/user/vexora"
     assert data["default_branch"] == "main"
     assert "id" in data
 

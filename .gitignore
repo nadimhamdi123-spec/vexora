@@ -233,7 +233,7 @@ __marimo__/
 # Temporary files
 *.tmp
 *.bak
-# DeployFlow local files
+# Vexora local files
 *.db
 *.sqlite
 
