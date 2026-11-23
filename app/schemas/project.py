@@ -25,5 +25,12 @@ class ProjectResponse(BaseModel):
     description: str | None
     git_url: str
     default_branch: str
+    github_repo_id: int | None
+    is_private: bool
+
+    primary_language: str | None
+    languages: dict | None
+    readme: str | None
+
     created_at: datetime
     updated_at: datetime

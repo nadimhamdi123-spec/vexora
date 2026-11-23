@@ -2,15 +2,28 @@
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from sqlalchemy import DateTime, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
-
+from sqlalchemy import (
+    BigInteger,
+    Boolean,
+    DateTime,
+    Index,
+    JSON,
+    String,
+    Text,
+)
 from app.db.base import Base
 
 
 class Project(Base):
     __tablename__ = "projects"
-
+    __table_args__ = (
+    Index(
+        "uq_projects_github_repo_id",
+        "github_repo_id",
+        unique=True,
+        ),
+    )
     id: Mapped[str] = mapped_column(
         String(36),
         primary_key=True,
@@ -39,6 +52,31 @@ class Project(Base):
         default="main",
     )
 
+    github_repo_id: Mapped[int | None] = mapped_column(
+        BigInteger,
+        nullable=True,
+    )
+
+    is_private: Mapped[bool] = mapped_column(
+        Boolean,
+        nullable=False,
+        default=False,
+    )
+
+    primary_language: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+
+    languages: Mapped[dict | None] = mapped_column(
+        JSON,
+        nullable=True,
+    )
+
+    readme: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
