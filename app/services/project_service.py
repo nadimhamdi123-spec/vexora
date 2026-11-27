@@ -4,8 +4,10 @@ from sqlalchemy.orm import Session
 
 from app.models.project import Project
 from app.schemas.project import ProjectCreate, ProjectUpdate
-from app.integrations.github.client import get_installation_repositories
-
+from app.integrations.github.client import (
+    get_installation_repositories,
+    get_repository_by_id,
+)
 def create_project(db: Session, data: ProjectCreate) -> Project:
     project = Project(**data.model_dump())
     
@@ -76,7 +78,7 @@ def synchronize_github_projects(db: Session) -> dict:
 
         else:
             project.name = repo["name"]
-            description=repo.get("description"),
+            project.description = repo.get("description")
             project.git_url = repo["html_url"]
             project.default_branch = repo["default_branch"]
             project.is_private = repo["private"]
@@ -92,3 +94,56 @@ def synchronize_github_projects(db: Session) -> dict:
         "created": created,
         "updated": updated,
     }
+
+
+def synchronize_github_project(
+    db: Session,
+    repository_id: int,
+) -> Project:
+    """
+    Synchronize one GitHub repository with the local database.
+    Create the project if it does not exist, otherwise update it.
+    """
+
+    repo = get_repository_by_id(repository_id)
+
+    try:
+        project = db.scalar(
+            select(Project).where(
+                Project.github_repo_id == repository_id
+            )
+        )
+
+        if project is None:
+            project = Project(
+                name=repo["name"],
+                description=repo.get("description"),
+                git_url=repo["html_url"],
+                default_branch=repo["default_branch"],
+                github_repo_id=repo["id"],
+                is_private=repo["private"],
+                primary_language=repo.get("primary_language"),
+                languages=repo.get("languages"),
+                readme=repo.get("readme"),
+            )
+
+            db.add(project)
+
+        else:
+            project.name = repo["name"]
+            project.description = repo.get("description")
+            project.git_url = repo["html_url"]
+            project.default_branch = repo["default_branch"]
+            project.is_private = repo["private"]
+            project.primary_language = repo.get("primary_language")
+            project.languages = repo.get("languages")
+            project.readme = repo.get("readme")
+
+        db.commit()
+        db.refresh(project)
+
+        return project
+
+    except Exception:
+        db.rollback()
+        raise

@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     GITHUB_REDIRECT_URI: str = (
         "http://127.0.0.1:8000/api/v1/integrations/github/callback"
     )
+    GITHUB_WEBHOOK_SECRET: str = ""
 
 
 @lru_cache
